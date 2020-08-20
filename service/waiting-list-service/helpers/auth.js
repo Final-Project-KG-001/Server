@@ -1,5 +1,4 @@
 const { verifyToken } = require("../helpers/jwt");
-const { response } = require("express");
 const { ObjectID } = require("mongodb");
 
 async function adminAuthentication(req, res, next) {
@@ -14,10 +13,10 @@ async function adminAuthentication(req, res, next) {
       if (response.role === "admin") {
         next();
       } else {
-        res.status(401).json({ message: "user cant read/modify this data!" });
+        res.status(403).json({ message: "user cant read/modify this data!" });
       }
     } else {
-      res.status(401).json({ message: "user cant read/modify this data!" });
+      res.status(401).json({ message: "Failed to authenticate" });
     }
   } catch (error) {
     throw error;
@@ -37,10 +36,10 @@ async function authentication(req, res, next) {
         req.currentUser = response;
         next();
       } else {
-        res.status(401).json({ message: "please login first!" });
-      }
+        res.status(401).json({ message: "Failed to authenticate" });
+      } 
     } else {
-      res.status(401).json({ message: "please login first!" });
+      res.status(401).json({ message: "Failed to authenticate" });
     }
   } catch (error) {
     throw error;

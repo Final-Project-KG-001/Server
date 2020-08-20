@@ -1,13 +1,10 @@
-const { getDatabase } = require('../config/connection');
-
 class DoctorController {
-    static database() {
-        return getDatabase().collection('doctors');
-    }
-
+    
     static async getDoctorRootHandler(req, res, next) {
+        const Doctor = req.doctorCollection;
+        
         try {
-            const doctors = await this.database().find().toArray();
+            const doctors = await Doctor.find().toArray();
 
             res.status(200).json(doctors);
         } catch (error) {

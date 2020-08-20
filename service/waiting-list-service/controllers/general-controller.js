@@ -1,14 +1,11 @@
-const { getDatabase } = require("../../../../../../Week 2/Day 4/hibur-aku/server/services/movieService/config/connection");
 const { ObjectId } = require("mongodb");
 
 class GeneralController {
-    static database() {
-        return getDatabase().collection('generals');
-    }
-    
     static async getGeneralRootHandler(req, res , next) {
+        const General = req.generalCollection;
+        
         try {
-            const generals = await this.database().find().toArray();
+            const generals = await General.find().toArray();
 
             res.status(200).json(generals);
         } catch (error) {
@@ -17,8 +14,10 @@ class GeneralController {
     }
 
     static async postGeneralRootHandler(req, res, next) {
+        const General = req.generalCollection;
+        
         try {
-            const result = await this.database().insertOne(req.body);
+            const result = await General.insertOne(req.body);
 
             res.status(201).json(result.ops[0]);
         } catch (error) {
@@ -28,6 +27,8 @@ class GeneralController {
 
     static async deleteGeneralByIdHandler(req, res, next) {
         let generalId = req.params.id;
+
+        const General = req.generalCollection;
         try {
             if(!generalId) {
                 next({
@@ -39,7 +40,7 @@ class GeneralController {
             } else {
                 generalId = ObjectId(generalId);
 
-                await this.database().deleteOne(
+                await General.deleteOne(
                     { _id: generalId}
                 );
 
@@ -51,4 +52,4 @@ class GeneralController {
     }
 }
 
-module.exports = DentalController;
+module.exports = GeneralController;
