@@ -2,7 +2,7 @@ const errorHandler = (err, req, res, next) => {
     switch (err.name) {
         case '404 Not Found':
             const error = err.error;
-            res.status(400).json({error});
+            res.status(404).json({error});
 
             break;
     
