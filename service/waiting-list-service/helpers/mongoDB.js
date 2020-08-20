@@ -7,9 +7,12 @@ async function connectToMongoDB(req, res, next) {
     await client.connect();
 
     const database = client.db("final-project-server");
-    // const collection = database.collection("");
+    
+    const userCollection = database.collection("users",);
+    const appointmentCollection = database.collection("appointments");
 
-    // req.collection = collection;
+    req.userCollection = userCollection;
+    req.appointmentCollection = appointmentCollection;
     next();
   } catch (error) {
     console.log(error);
