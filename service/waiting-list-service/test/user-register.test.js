@@ -47,19 +47,19 @@ describe("POST /user/register", () => {
         const { body, status } = res;
 
         expect(status).toBe(400);
-        expect(body.message).toEqual(
+        expect(body.error).toEqual(
           expect.arrayContaining(["Name field cannot be empty!"])
         );
-        expect(body.message).toEqual(
+        expect(body.error).toEqual(
           expect.arrayContaining(["Date of birth field cannot be empty!"])
         );
-        expect(body.message).toEqual(
+        expect(body.error).toEqual(
           expect.arrayContaining(["Email field cannot be empty!"])
         );
-        expect(body.message).toEqual(
+        expect(body.error).toEqual(
           expect.arrayContaining(["Password field cannot be empty!"])
         );
-        expect(body.message).toEqual(
+        expect(body.error).toEqual(
           expect.arrayContaining(["Phone number field cannot be empty!"])
         );
 
@@ -83,7 +83,7 @@ describe("POST /user/register", () => {
         const { body, status } = res;
 
         expect(status).toBe(400);
-        expect(body.message).toEqual(
+        expect(body.error).toEqual(
           expect.arrayContaining(["Invalid date of birth data type!"])
         );
 
@@ -107,7 +107,7 @@ describe("POST /user/register", () => {
         const { body, status } = res;
 
         expect(status).toBe(400);
-        expect(body).toHaveProperty("message", "Invalid data type!");
+        expect(body).toHaveProperty("error", "Invalid data type!");
 
         done();
       });

@@ -1,8 +1,7 @@
 const { verifyToken } = require("../helpers/jwt");
-const { response } = require("express");
 const { ObjectID } = require("mongodb");
 
-async function adminAuthentication(req, res, next) {
+async function isAdmin(req, res, next) {
   try {
     const { access_token } = req.headers;
     const collection = req.userCollection;
@@ -14,13 +13,13 @@ async function adminAuthentication(req, res, next) {
       if (response.role === "admin") {
         next();
       } else {
-        res.status(403).json({ message: "user cant read/modify this data!" });
+        next({ name: "403 Forbidden", error: "Admin access required" });
       }
     } else {
-      res.status(401).json({ message: "Authentication failed!" });
+      next({ name: "401 Unauthorized", error: "Failed to authenticate" });
     }
   } catch (error) {
-    throw error;
+    next(error);
   }
 }
 
@@ -37,13 +36,13 @@ async function authentication(req, res, next) {
         req.currentUser = response;
         next();
       } else {
-        res.status(401).json({ message: "please login first!" });
+        next({ name: "401 Unauthorized", error: "Failed to authenticate" });
       }
     } else {
-      res.status(401).json({ message: "please login first!" });
+      next({ name: "401 Unauthorized", error: "Failed to authenticate" });
     }
   } catch (error) {
-    throw error;
+    next(error);
   }
 }
 
@@ -58,20 +57,18 @@ async function authorization(req, res, next) {
       if (_id == userId) {
         next();
       } else {
-        res
-          .status(403)
-          .json({ message: "you are unauthorized to read/modify this data!" });
+        next({ name: "403 Forbidden", error: "User unauthorized" });
       }
     } else {
-      res.status(404).json({ message: "data not found!" });
+      next({ name: "404 Not Found", error: "Data not found" });
     }
   } catch (error) {
-    throw error;
+    next(error);
   }
 }
 
 module.exports = {
-  adminAuthentication,
+  isAdmin,
   authentication,
   authorization,
 };

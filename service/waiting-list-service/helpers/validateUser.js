@@ -59,7 +59,7 @@ function validateUpdate(data) {
     if (dob === "" || dob === null) {
       errorMessage.push("Date of birth field cannot be empty!");
     } else if (checkDate == "Invalid Date") {
-      errorMessage.push("Invalid Date of birth data type!");
+      errorMessage.push("Invalid date of birth data type!");
     }
 
     if (phoneNumber === "" || phoneNumber === null) {
@@ -74,7 +74,7 @@ function validateUpdate(data) {
       return [false, ""];
     }
   } catch (error) {
-    return [true, "invalid data type!"];
+    return [true, "Invalid data type!"];
   }
 }
 

@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/", generalController.getGeneralRootHandler);
 router.post("/", generalController.postGeneralRootHandler);
-router.delete("/:id", generalController, deleteGeneralByIdHandler);
+router.delete("/:id", generalController.deleteGeneralByIdHandler);
 
 module.exports = router;

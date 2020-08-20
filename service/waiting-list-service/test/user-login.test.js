@@ -23,4 +23,25 @@ describe("POST /user/login", () => {
         done();
       });
   });
+
+  const invalidUser = {
+    email: "wrongemail@mail.com",
+    password: "wrongpassword",
+  };
+
+  test.only("400 Failed Login - Should return error message", (done) => {request(app)
+    .post("/user/login")
+    .send(invalidUser)
+    .set("Accept", "application/json")
+    .end((err, res) => {
+      if (err) throw err;
+
+      const { body, status } = res;
+
+      expect(status).toBe(400);
+      expect(body).toHaveProperty("error", "Invalid email/password");
+
+      done();
+    });})
+
 });
