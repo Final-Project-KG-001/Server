@@ -14,10 +14,10 @@ async function adminAuthentication(req, res, next) {
       if (response.role === "admin") {
         next();
       } else {
-        res.status(401).json({ message: "user cant read/modify this data!" });
+        res.status(403).json({ message: "user cant read/modify this data!" });
       }
     } else {
-      res.status(401).json({ message: "user cant read/modify this data!" });
+      res.status(401).json({ message: "Authentication failed!" });
     }
   } catch (error) {
     throw error;

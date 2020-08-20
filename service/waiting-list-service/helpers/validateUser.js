@@ -14,7 +14,7 @@ function validateRegister(data) {
     if (dob === "" || dob === null) {
       errorMessage.push("Date of birth field cannot be empty!");
     } else if (checkDate == "Invalid Date") {
-      errorMessage.push("Invalid Date of birth data type!");
+      errorMessage.push("Invalid date of birth data type!");
     }
 
     if (email === "" || email === null) {
@@ -39,7 +39,7 @@ function validateRegister(data) {
       return [false, ""];
     }
   } catch (error) {
-    return [true, "invalid data type!"];
+    return [true, "Invalid data type!"];
   }
 }
 
