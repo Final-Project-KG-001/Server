@@ -1,14 +1,12 @@
-const { getDatabase } = require("../../../../../../Week 2/Day 4/hibur-aku/server/services/movieService/config/connection");
 const { ObjectId } = require("mongodb");
 
 class DentalController {
-    static database() {
-        return getDatabase().collection('dentals');
-    }
     
     static async getDentalRootHandler(req, res , next) {
+        const Dental = req.dentalCollection;
+
         try {
-            const dentals = await this.database().find().toArray();
+            const dentals = await Dental.find().toArray();
 
             res.status(200).json(dentals);
         } catch (error) {
@@ -17,8 +15,10 @@ class DentalController {
     }
 
     static async postDentalRootHandler(req, res, next) {
+        const Dental = req.dentalCollection;
+        
         try {
-            const result = await this.database().insertOne(req.body);
+            const result = await Dental.insertOne(req.body);
 
             res.status(201).json(result.ops[0]);
         } catch (error) {
@@ -28,6 +28,8 @@ class DentalController {
 
     static async deleteDentalByIdHandler(req, res, next) {
         let dentalId = req.params.id;
+
+        const Dental = req.dentalCollection;
         try {
             if(!dentalId) {
                 next({
@@ -39,7 +41,7 @@ class DentalController {
             } else {
                 dentalId = ObjectId(dentalId);
 
-                await this.database().deleteOne(
+                await Dental.deleteOne(
                     { _id: dentalId}
                 );
 
