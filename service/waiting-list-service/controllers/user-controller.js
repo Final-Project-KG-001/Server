@@ -26,10 +26,10 @@ class UserController {
           email,
         });
       } else {
-        res.status(400).json({ message: checkRegister[1] });
+        next({ name: "400 Bad Request", error: checkRegister[1] }) ;
       }
     } catch (error) {
-      res.status(500).json(error);
+      next(error);
     }
   }
 
@@ -51,13 +51,13 @@ class UserController {
           });
           res.status(200).json({ access_token: token });
         } else {
-          res.status(400).json({ message: "invalid email/password" });
+          next({name: "400 Bad Request", error: "Invalid email/password"})
         }
       } else {
-        res.status(400).json({ message: "invalid email/password" });
+        next({name: "400 Bad Request", error: "Invalid email/password"})
       }
     } catch (error) {
-      res.status(500).json(error);
+      next(error);
     }
   }
 
@@ -82,10 +82,10 @@ class UserController {
         );
         res.status(200).json({ message: "successfully updated user" });
       } else {
-        res.status(400).json({ message: checkUpdate[1] });
+        next({ name: "400 Bad Request", error: checkUpdate[1] });
       }
     } catch (error) {
-      res.status(500).json(error);
+      next(error);
     }
   }
 
@@ -96,7 +96,7 @@ class UserController {
       const users = await collection.find().toArray();
       res.status(200).json({ users: users });
     } catch (error) {
-      res.status(500).json(error);
+      next(error);
     }
   }
 }
