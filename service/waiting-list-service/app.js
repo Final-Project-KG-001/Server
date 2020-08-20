@@ -1,7 +1,6 @@
 const express = require('express')
 require('dotenv').config()
 
-const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const router = require("./routes/index.js");
@@ -13,6 +12,8 @@ app.use(express.json());
 app.use(connectToMongoDB)
 app.use("/", router);
 
-app.listen(PORT, () => {
-  console.log(`Current PORT: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Current PORT: ${PORT}`);
+// });
+
+module.exports = app
