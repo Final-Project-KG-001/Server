@@ -15,9 +15,9 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addDental(): Appointment
+        addDental(doctorId: Int): Appointment
         deleteDental(_id: ID): Appointment
-        addGeneral(): Appointment
+        addGeneral(doctorId: Int): Appointment
         deleteGeneral(_id: ID): Appointment
     }
 `;
@@ -47,7 +47,7 @@ const resolvers = {
             return data;
         },
         deleteDental: async (parent, args) => {
-            const { data } = await axios.delete(`http://localhost:3000/dentals/${args_id}`);
+            const { data } = await axios.delete(`http://localhost:3000/dentals/${args._id}`);
 
             return data;
         },
@@ -57,7 +57,7 @@ const resolvers = {
             return data;
         },
         deleteGeneral: async (parent, args) => {
-            const { data } = await axios.delete(`http://localhost:3000/generals/${args_id}`);
+            const { data } = await axios.delete(`http://localhost:3000/generals/${args._id}`);
 
             return data;
         }
