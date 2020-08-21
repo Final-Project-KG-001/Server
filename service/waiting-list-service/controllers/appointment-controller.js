@@ -36,7 +36,6 @@ class AppointmentController {
   static async read(req, res, next) {
     try {
       const collection = req.appointmentCollection;
-      // const appointments = await collection.find().toArray();
       const joinAppointment = await collection.aggregate([
         {
           $lookup:
@@ -78,9 +77,7 @@ class AppointmentController {
         }
       ]).toArray();
 
-      console.log(joinAppointment);
-
-      // res.status(200).json({ appointments });
+      res.status(200).json({ appointments: joinAppointment });
     } catch (error) {
       console.log(error);
       next(error);

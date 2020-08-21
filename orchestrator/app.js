@@ -48,6 +48,8 @@ const typeDefs = gql`
     doctorId: ID
     queueNumber: Int
     status: String
+    user: [User]
+    doctor: [Doctor]
   }
 
   type ResponseUser {
