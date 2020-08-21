@@ -38,6 +38,7 @@ const typeDefs = gql`
     userId: ID
     doctorId: ID
     queueNumber: Int
+    status: String
   }
 
   type Query {
@@ -68,6 +69,7 @@ const typeDefs = gql`
       phoneNumber: String
     ): ResponseUser
     addAppointment(doctorId: ID, queueNumber: String): ResponseAppointment
+    changeAppointmentStatus(_id: ID, status: String): ResponseAppointment
   }
 `;
 
@@ -181,15 +183,34 @@ const resolvers = {
     },
     addAppointment: async (parent, args) => {
       const { doctorId, queueNumber } = args;
-      const { data } = await axios.post("http://localhost:3000/appointment", {
-        doctorId,
-        queueNumber
-      },
-      {
-        headers: {
-          access_token: userToken,
+      const { data } = await axios.post(
+        "http://localhost:3000/appointment",
+        {
+          doctorId,
+          queueNumber,
         },
-      });
+        {
+          headers: {
+            access_token: userToken,
+          },
+        }
+      );
+
+      return data;
+    },
+    changeAppointmentStatus: async (parent, args) => {
+      const { status, _id } = args;
+      const { data } = await axios.put(
+        `http://localhost:3000/appointment/${_id}`,
+        {
+          status,
+        },
+        {
+          headers: {
+            access_token: adminToken,
+          },
+        }
+      );
 
       return data;
     },
