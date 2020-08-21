@@ -8,8 +8,8 @@ class AppointmentController {
 
       if (doctorId !== "" && doctorId !== null) {
         const newAppointment = await collection.insertOne({
-          userId: req.currentUser._id,
-          doctorId: doctorId,
+          userId: ObjectId(req.currentUser._id),
+          doctorId: ObjectId(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
         });
@@ -36,10 +36,53 @@ class AppointmentController {
   static async read(req, res, next) {
     try {
       const collection = req.appointmentCollection;
-      const appointments = await collection.find().toArray();
+      // const appointments = await collection.find().toArray();
+      const joinAppointment = await collection.aggregate([
+        {
+          $lookup:
+          {
+            from: "doctors",
+            let: { doctorId: "$doctorId" },
+            pipeline:  [
+              { $match: 
+                { $expr: 
+                  { $and: 
+                    [
+                      { $eq: ["$_id", "$$doctorId"]}
+                    ]
+                  }
+                }
+              }
+            ],
+            as: 'doctor'
+          },
+        },
+        {
+          $lookup:
+          {
+            from: "users",
+            let: { userId: "$userId" },
+            pipeline: [
+              { $match: 
+                { $expr: 
+                  { $and: 
+                    [
+                      { $eq: ["$_id", "$$userId"]}
+                    ]
+                  }
+                }
+              }
+            ],
+            as: 'user'
+          }
+        }
+      ]).toArray();
 
-      res.status(200).json({ appointments });
+      console.log(joinAppointment);
+
+      // res.status(200).json({ appointments });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }

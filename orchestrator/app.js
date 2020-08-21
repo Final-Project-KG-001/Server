@@ -155,7 +155,9 @@ const resolvers = {
         appointment: args, 
       },
       {
-        headers: userToken
+        headers: {
+          access_token: userToken
+        }
       });
 
       return data;
@@ -164,7 +166,9 @@ const resolvers = {
       const { data } = await axios.delete(
         `http://localhost:3000/dental/${args._id}`,
         {
-          headers: adminToken
+          headers: {
+            access_token: adminToken
+          }
         }
       );
 
@@ -175,7 +179,9 @@ const resolvers = {
         appointment: args,
       },
       {
-        headers: userToken
+        headers: {
+          access_token: userToken
+        }
       });
 
       return data;
@@ -184,7 +190,9 @@ const resolvers = {
       const { data } = await axios.delete(
         `http://localhost:3000/general/${args._id}`,
         {
-          headers: adminToken
+          headers: {
+            access_token: adminToken
+          }
         }
       );
 
