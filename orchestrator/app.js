@@ -8,6 +8,30 @@ const typeDefs = gql`
     polyclinic: String
   }
 
+  type Dental {
+    _id: ID
+    appointment: Appointment
+  }
+
+  type ResponseDental {
+    _id: ID
+    appointment: Appointment
+    status: String
+    message: String
+  }
+
+  type General {
+    _id : ID
+    appointment: Appointment
+  }
+
+  type ResponseGeneral {
+    _id: ID
+    appointment: Appointment
+    status: String
+    message: String
+  }
+
   type User {
     _id: ID
     name: String
@@ -43,17 +67,17 @@ const typeDefs = gql`
 
   type Query {
     doctors: [Doctor]
-    dentals: [Appointment]
-    generals: [Appointment]
+    dentals: [Dental]
+    generals: [General]
     users: [User]
     appointments: [Appointment]
   }
 
   type Mutation {
-    addDental(doctorId: Int): Appointment
-    deleteDental(_id: ID): Appointment
-    addGeneral(doctorId: Int): Appointment
-    deleteGeneral(_id: ID): Appointment
+    addDental(userId: ID, doctorId: ID, queueNumber: Int): ResponseDental
+    deleteDental(_id: ID): ResponseDental
+    addGeneral(userId: ID, doctorId: ID, queueNumber: Int): ResponseGeneral
+    deleteGeneral(_id: ID): ResponseGeneral
     registerUser(
       name: String
       dob: String
@@ -82,17 +106,29 @@ const userToken =
 const resolvers = {
   Query: {
     doctors: async () => {
-      const { data } = await axios.get("http://localhost:3000/doctors");
+      const { data } = await axios.get("http://localhost:3000/doctor", {
+        headers: {
+          access_token: userToken
+        }
+      });
 
       return data;
     },
     dentals: async () => {
-      const { data } = await axios.get("http://localhost:3000/dentals");
+      const { data } = await axios.get("http://localhost:3000/dental", {
+        headers: {
+          access_token: userToken
+        }
+      });
 
       return data;
     },
     generals: async () => {
-      const { data } = await axios.get("http://localhost:3000/generals");
+      const { data } = await axios.get("http://localhost:3000/general", {
+        headers: {
+          access_token: userToken
+        }
+      });
 
       return data;
     },
@@ -115,29 +151,41 @@ const resolvers = {
   },
   Mutation: {
     addDental: async (parent, args) => {
-      const { data } = await axios.post("http://localhost:3000/dentals", {
-        dental: args,
+      const { data } = await axios.post("http://localhost:3000/dental", {
+        appointment: args, 
+      },
+      {
+        headers: userToken
       });
 
       return data;
     },
     deleteDental: async (parent, args) => {
       const { data } = await axios.delete(
-        `http://localhost:3000/dentals/${args._id}`
+        `http://localhost:3000/dental/${args._id}`,
+        {
+          headers: adminToken
+        }
       );
 
       return data;
     },
     addGeneral: async (parent, args) => {
-      const { data } = await axios.post("http://localhost:3000/generals", {
-        general: args,
+      const { data } = await axios.post("http://localhost:3000/general", {
+        appointment: args,
+      },
+      {
+        headers: userToken
       });
 
       return data;
     },
     deleteGeneral: async (parent, args) => {
       const { data } = await axios.delete(
-        `http://localhost:3000/generals/${args._id}`
+        `http://localhost:3000/general/${args._id}`,
+        {
+          headers: adminToken
+        }
       );
 
       return data;
