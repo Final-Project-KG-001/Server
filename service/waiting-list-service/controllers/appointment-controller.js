@@ -1,3 +1,5 @@
+const { ObjectID } = require("mongodb");
+
 class AppointmentController {
   static async write(req, res, next) {
     try {
@@ -37,6 +39,41 @@ class AppointmentController {
       const appointments = await collection.find().toArray();
 
       res.status(200).json({ appointments });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async changeStatus(req, res, next) {
+    try {
+      const id = req.params.id;
+      const { status } = req.body;
+      const collection = req.appointmentCollection;
+
+      if (status !== "" && status !== null) {
+        const currentAppointment = await collection.findOne({
+          _id: ObjectID(id),
+        });
+        if (currentAppointment) {
+          const updateAppointment = await collection.updateOne(
+            { _id: ObjectID(id) },
+            {
+              $set: {
+                status: status,
+              },
+            }
+          );
+          
+          res.status(200).json({
+            message: "successfully updated appointment",
+            status: status,
+          });
+        } else {
+          next({ name: "404 Not Found", error: "Data not found" });
+        }
+      } else {
+        next({ name: "400 Bad Request", error: "Invalid status" });
+      }
     } catch (error) {
       next(error);
     }
