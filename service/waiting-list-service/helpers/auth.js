@@ -11,6 +11,7 @@ async function isAdmin(req, res, next) {
       const response = await collection.findOne({ email: payload.email });
 
       if (response.role === "admin") {
+
         next();
       } else {
         next({ name: "403 Forbidden", error: "Admin access required" });

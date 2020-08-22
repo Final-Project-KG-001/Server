@@ -7,7 +7,7 @@ async function connectToMongoDB(req, res, next) {
     await client.connect();
 
     const database = client.db("final-project-server");
-    
+
     const userCollection = database.collection("users",);
     const appointmentCollection = database.collection("appointments");
     const doctorCollection = database.collection("doctors");
