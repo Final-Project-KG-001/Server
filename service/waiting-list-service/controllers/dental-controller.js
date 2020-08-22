@@ -6,8 +6,28 @@ class DentalController {
         const Dental = req.dentalCollection;
 
         try {
-            const dentals = await Dental.find().toArray();
-
+            const dentals = await Dental.aggregate([
+                {
+                    $lookup:
+                    {
+                        from: "appointments",
+                        let: { appointmentId: "$appointmentId" },
+                        pipeline: [
+                            { $match: 
+                                { $expr: 
+                                    { $and: 
+                                        [
+                                            { $eq: ["$_id", "$$appointmentId"] }
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        as: 'appointment'
+                    }
+                }
+            ]).toArray();
+            
             res.status(200).json(dentals);
         } catch (error) {
             next(error);
@@ -17,10 +37,16 @@ class DentalController {
     static async postDentalRootHandler(req, res, next) {
         const Dental = req.dentalCollection;
         
-        try {
-            const result = await Dental.insertOne(req.body);
+        const { appointmentId } = req.body;
 
-            res.status(201).json(result.ops[0]);
+        const newQueue = {
+            appointmentId: ObjectId(appointmentId)
+        };
+
+        try {
+            const result = await Dental.insertOne(newQueue);
+
+            res.status(201).json({status: '201 Created', message: 'Appointment have successfully added to queue'});
         } catch (error) {
             next(error);
         }

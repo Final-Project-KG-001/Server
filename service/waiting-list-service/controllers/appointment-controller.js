@@ -79,7 +79,6 @@ class AppointmentController {
 
       res.status(200).json({ appointments: appointments });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

@@ -5,7 +5,27 @@ class GeneralController {
         const General = req.generalCollection;
         
         try {
-            const generals = await General.find().toArray();
+            const generals = await General.aggregate([
+                {
+                    $lookup:
+                    {
+                        from: "appointments",
+                        let: { appointmentId: "$appointmentId" },
+                        pipeline: [
+                            { $match: 
+                                { $expr: 
+                                    { $and: 
+                                        [
+                                            { $eq: ["$_id", "$$appointmentId"] }
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        as: 'appointment'
+                    }
+                }
+            ]).toArray();
 
             res.status(200).json(generals);
         } catch (error) {
@@ -16,10 +36,16 @@ class GeneralController {
     static async postGeneralRootHandler(req, res, next) {
         const General = req.generalCollection;
         
-        try {
-            const result = await General.insertOne(req.body);
+        const { appointmentId } = req.body;
 
-            res.status(201).json(result.ops[0]);
+        const newQueue = {
+            appointmentId: ObjectId(appointmentId)
+        };
+
+        try {
+            const result = await General.insertOne(newQueue);
+
+            res.status(201).json({status: '201 Created', message: 'Appointment have successfully added to queue'});
         } catch (error) {
             next(error);
         }
