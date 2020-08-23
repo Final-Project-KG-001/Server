@@ -10,24 +10,26 @@ const typeDefs = gql`
 
   type Dental {
     _id: ID
-    appointment: Appointment
+    appointmentId: ID
+    appointment: [Appointment]
   }
 
   type ResponseDental {
     _id: ID
-    appointment: Appointment
+    appointmentId: ID
     status: String
     message: String
   }
 
-  type General {
+  type General {  
     _id : ID
-    appointment: Appointment
+    appointmentId: ID
+    appointment: [Appointment]
   }
 
   type ResponseGeneral {
     _id: ID
-    appointment: Appointment
+    appointmentId: ID
     status: String
     message: String
   }
@@ -77,9 +79,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addDental(userId: ID, doctorId: ID, queueNumber: Int): ResponseDental
+    addDental(appointmentId: ID): ResponseDental
     deleteDental(_id: ID): ResponseDental
-    addGeneral(userId: ID, doctorId: ID, queueNumber: Int): ResponseGeneral
+    addGeneral(appointmentId: ID): ResponseGeneral
     deleteGeneral(_id: ID): ResponseGeneral
     registerUser(
       name: String
@@ -155,9 +157,7 @@ const resolvers = {
   },
   Mutation: {
     addDental: async (parent, args) => {
-      const { data } = await axios.post("http://localhost:3000/dental", {
-        appointment: args, 
-      },
+      const { data } = await axios.post("http://localhost:3000/dental", args,
       {
         headers: {
           access_token: userToken
@@ -167,8 +167,7 @@ const resolvers = {
       return data;
     },
     deleteDental: async (parent, args) => {
-      const { data } = await axios.delete(
-        `http://localhost:3000/dental/${args._id}`,
+      const { data } = await axios.delete(`http://localhost:3000/dental/${args._id}`,
         {
           headers: {
             access_token: adminToken
@@ -179,9 +178,7 @@ const resolvers = {
       return data;
     },
     addGeneral: async (parent, args) => {
-      const { data } = await axios.post("http://localhost:3000/general", {
-        appointment: args,
-      },
+      const { data } = await axios.post("http://localhost:3000/general", args,
       {
         headers: {
           access_token: userToken
