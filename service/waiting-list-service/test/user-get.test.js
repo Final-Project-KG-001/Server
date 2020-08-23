@@ -34,7 +34,7 @@ describe("GET /user/", () => {
       });
   });
 
-  test("401 Failed Aunthentication - Should return error message", (done) => {
+  test("401 Failed Authentication - Should return error message", (done) => {
     request(app)
       .get("/user")
       .send(adminUser)

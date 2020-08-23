@@ -48,6 +48,7 @@ const typeDefs = gql`
     doctorId: ID
     queueNumber: Int
     status: String
+    createdAt: String
     user: [User]
     doctor: [Doctor]
   }
@@ -88,6 +89,7 @@ const typeDefs = gql`
       phoneNumber: String
     ): ResponseUser
     loginUser(email: String, password: String): ResponseUser
+    loginAdmin(email: String, password: String): ResponseUser
     updateUser(
       _id: ID
       name: String
@@ -215,6 +217,15 @@ const resolvers = {
     loginUser: async (parent, args) => {
       const { email, password } = args;
       const { data } = await axios.post("http://localhost:3000/user/login", {
+        email,
+        password,
+      });
+
+      return data;
+    },
+    loginAdmin: async (parent, args) => {
+      const { email, password } = args;
+      const { data } = await axios.post("http://localhost:3000/user/loginadmin", {
         email,
         password,
       });

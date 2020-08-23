@@ -8,7 +8,7 @@ describe("POST /appointment/", () => {
   };
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QwMjY2NzQ4ZTIyM2E5NGRhMzdlYSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1OTc4NDI4MDd9.e-GGocKlVpJkG601frFpuO0AVLcUnwD8pCEZwDDGFPU"
 
-  test("201 Success Create - Should return message, name, email", (done) => {
+  test.only("201 Success Create - Should return message, user ID, doctor ID, queue number, created at", (done) => {
     request(app)
       .post("/appointment")
       .send(testData)
@@ -25,8 +25,9 @@ describe("POST /appointment/", () => {
           "successfully created new queue"
         );
         expect(body).toHaveProperty("userId", expect.any(String));
-        expect(body).toHaveProperty("doctorId", testData.doctorId);
+        expect(body).toHaveProperty("doctorId", expect.any(String));
         expect(body).toHaveProperty("queueNumber", testData.queueNumber);
+        expect(body).toHaveProperty("createdAt", expect.any(String));
 
         done();
       });
@@ -53,7 +54,7 @@ describe("POST /appointment/", () => {
     });
   });
 
-  test.only("401 Failed Create - failed authentication -  Should return error message", (done) => {
+  test("401 Failed Create - failed authentication -  Should return error message", (done) => {
     request(app)
     .post("/appointment")
     .send(testData)
