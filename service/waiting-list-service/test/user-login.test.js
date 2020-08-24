@@ -7,7 +7,7 @@ describe("POST /user/login", () => {
     password: "password4",
   };
 
-  test("200 Success Login - Should return access token", (done) => {
+  test.only("200 Success Login - Should return access token", (done) => {
     request(app)
       .post("/user/login")
       .send(testUser)
@@ -29,7 +29,7 @@ describe("POST /user/login", () => {
     password: "wrongpassword",
   };
 
-  test.only("400 Failed Login - Should return error message", (done) => {request(app)
+  test("401 Failed Login - Should return error message", (done) => {request(app)
     .post("/user/login")
     .send(invalidUser)
     .set("Accept", "application/json")
@@ -38,7 +38,7 @@ describe("POST /user/login", () => {
 
       const { body, status } = res;
 
-      expect(status).toBe(400);
+      expect(status).toBe(401);
       expect(body).toHaveProperty("error", "Invalid email/password");
 
       done();

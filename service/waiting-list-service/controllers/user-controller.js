@@ -43,6 +43,7 @@ class UserController {
       });
 
       if (response) {
+
         if (comparePassword(password, response.password)) {
           let token = signToken({
             id: response._id,
@@ -51,10 +52,10 @@ class UserController {
           });
           res.status(200).json({ access_token: token });
         } else {
-          next({ name: "400 Bad Request", error: "Invalid email/password" })
+          next({ name: "401 Unauthorized", error: "Invalid email/password" });
         }
       } else {
-        next({ name: "400 Bad Request", error: "Invalid email/password" })
+        next({ name: "401 Unauthorized", error: "Invalid email/password" });
       }
     } catch (error) {
       next(error);
@@ -95,6 +96,44 @@ class UserController {
 
       const users = await collection.find().toArray();
       res.status(200).json({ users: users });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async loginAdmin(req, res, next) {
+
+    try {
+      const { email, password } = req.body;
+      const collection = req.userCollection;
+
+      const response = await collection.findOne({
+        email: email,
+      });
+
+      if (response) {
+
+        if (comparePassword(password, response.password)) {
+
+          if (response.role === "admin") {
+            let token = signToken({
+              id: response._id,
+              email: email,
+              role: response.role,
+            });
+
+            res.status(200).json({ access_token: token });
+          } else {
+            next({ name: "403 Forbidden", error: "Admin access required" });
+          }
+        } else {
+
+          next({ name: "401 Unauthorized", error: "Invalid email/password" });
+        }
+      } else {
+
+        next({ name: "401 Unauthorized", error: "Invalid email/password" });
+      }
     } catch (error) {
       next(error);
     }

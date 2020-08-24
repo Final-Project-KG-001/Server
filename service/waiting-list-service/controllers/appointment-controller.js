@@ -9,22 +9,25 @@ class AppointmentController {
 
       if (doctorId !== "" && doctorId !== null) {
         const newAppointment = await collection.insertOne({
-          userId: ObjectId(req.currentUser._id),
-          doctorId: ObjectId(doctorId),
+          userId: ObjectID(req.currentUser._id),
+          doctorId: ObjectID(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
+          createdAt: new Date(),
         });
 
         const {
           userId,
           doctorId: doctor,
           queueNumber: number,
+          createdAt: create
         } = newAppointment.ops[ 0 ];
         res.status(201).json({
           message: "successfully created new queue",
           userId: userId,
           doctorId: doctor,
           queueNumber: number,
+          createdAt: create
         });
       } else {
         next({ name: "400 Bad Request", error: "Doctor ID cannot be empty!" });
