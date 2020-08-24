@@ -12,7 +12,7 @@ class AppointmentController {
           doctorId: ObjectID(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
-          createdAt: new Date(),
+          createdAt: (new Date()).toLocaleString(),
         });
         
         const {
