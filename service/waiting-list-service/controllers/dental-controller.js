@@ -1,5 +1,4 @@
 const { ObjectId } = require("mongodb");
-const { response } = require("express");
 
 class DentalController {
     
