@@ -12,7 +12,7 @@ describe("PUT /appointment/:id", () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QyYzU3ZmRiNWVkOTJiNGZlNWVlMCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1OTc5MjQzOTl9.ZibH8BvEaB778U8qDaA8YZKRpa_uC7OB4sWThqYcbr4";
   const id = "5f3e2246f26f5f6630cddef4";
 
-  test("200 Success Update - Should return message and new status", (done) => {
+  test.only("200 Success Update - Should return message and new status", (done) => {
     request(app)
       .put(`/appointment/${id}`)
       .send(data)
@@ -29,6 +29,16 @@ describe("PUT /appointment/:id", () => {
           "successfully updated appointment"
         );
         expect(body).toHaveProperty("status", data.status);
+        expect(body).toHaveProperty(
+          "appointment",
+          expect.objectContaining({
+            _id: expect.any(String),
+            userId: expect.any(String),
+            doctorId: expect.any(String),
+            queueNumber: expect.any(Number),
+            status: data.status,
+          })
+        );
 
         done();
       });
@@ -88,7 +98,7 @@ describe("PUT /appointment/:id", () => {
       });
   });
 
-  test.only("404 Not Found - invalid id - Should return error message", (done) => {
+  test("404 Not Found - invalid id - Should return error message", (done) => {
     request(app)
       .put("/appointment/5f3e2246f26f5f6630cddef9")
       .send(data)
