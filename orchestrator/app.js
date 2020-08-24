@@ -183,7 +183,7 @@ const resolvers = {
           access_token: userToken,
         },
       });
-      pubsub.publish(DENTAL_ADDED, { newDental: args });
+      pubsub.publish(DENTAL_ADDED, { newDental: data });
       return data;
     },
     deleteDental: async (parent, args) => {
