@@ -8,10 +8,10 @@ class UserController {
     try {
       const { name, dob, email, password, phoneNumber } = req.body;
       const collection = req.userCollection;
-
+      console.log(req.body)
       let checkRegister = await validateRegister(req.body);
 
-      if (checkRegister[0] === false) {
+      if (checkRegister[ 0 ] === false) {
         const newUser = await collection.insertOne({
           name,
           dob, // format yyyy-mm-dd
@@ -26,7 +26,7 @@ class UserController {
           email,
         });
       } else {
-        next({ name: "400 Bad Request", error: checkRegister[1] }) ;
+        next({ name: "400 Bad Request", error: checkRegister[ 1 ] });
       }
     } catch (error) {
       next(error);
@@ -51,10 +51,10 @@ class UserController {
           });
           res.status(200).json({ access_token: token });
         } else {
-          next({name: "400 Bad Request", error: "Invalid email/password"})
+          next({ name: "400 Bad Request", error: "Invalid email/password" })
         }
       } else {
-        next({name: "400 Bad Request", error: "Invalid email/password"})
+        next({ name: "400 Bad Request", error: "Invalid email/password" })
       }
     } catch (error) {
       next(error);
@@ -69,7 +69,7 @@ class UserController {
 
       const checkUpdate = await validateUpdate(req.body);
 
-      if (checkUpdate[0] === false) {
+      if (checkUpdate[ 0 ] === false) {
         const updateUser = await collection.updateOne(
           { _id: ObjectID(id) },
           {
@@ -82,7 +82,7 @@ class UserController {
         );
         res.status(200).json({ message: "successfully updated user" });
       } else {
-        next({ name: "400 Bad Request", error: checkUpdate[1] });
+        next({ name: "400 Bad Request", error: checkUpdate[ 1 ] });
       }
     } catch (error) {
       next(error);

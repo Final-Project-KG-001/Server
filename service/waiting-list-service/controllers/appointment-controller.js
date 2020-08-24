@@ -1,4 +1,4 @@
-const ObjectID = require("mongodb");
+const { ObjectId } = require("mongodb");
 
 class AppointmentController {
   static async write(req, res, next) {
@@ -9,8 +9,8 @@ class AppointmentController {
 
       if (doctorId !== "" && doctorId !== null) {
         const newAppointment = await collection.insertOne({
-          userId: ObjectID(req.currentUser._id),
-          doctorId: ObjectID(doctorId),
+          userId: ObjectId(req.currentUser._id),
+          doctorId: ObjectId(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
         });
@@ -36,6 +36,7 @@ class AppointmentController {
   }
 
   static async read(req, res, next) {
+
     try {
       const collection = req.appointmentCollection;
       const appointments = await collection.aggregate([
@@ -101,12 +102,12 @@ class AppointmentController {
       if (status !== "" && status !== null) {
 
         const currentAppointment = await collection.findOne({
-          _id: ObjectID(id),
+          _id: ObjectId(id),
         });
 
         if (currentAppointment) {
           const updateAppointment = await collection.updateOne(
-            { _id: ObjectID(id) },
+            { _id: ObjectId(id) },
             {
               $set: {
                 status: status,

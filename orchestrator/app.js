@@ -22,7 +22,7 @@ const typeDefs = gql`
   }
 
   type General {  
-    _id : ID
+    _id: ID
     appointmentId: ID
     appointment: [Appointment]
   }
@@ -152,7 +152,7 @@ const resolvers = {
           access_token: userToken,
         },
       });
-
+      // console.log(data)
       return data.appointments;
     },
   },
@@ -202,6 +202,7 @@ const resolvers = {
     },
     registerUser: async (parent, args) => {
       const { name, dob, email, password, phoneNumber } = args;
+      // console.log(args)
       const { data } = await axios.post("http://localhost:3000/user/register", {
         name,
         dob,
@@ -250,7 +251,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: userToken,
+            access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDEyNWExY2FiNGQ5MjBlZTRiOTkwZCIsImVtYWlsIjoiYW1lbEBtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTk4MTA1MTA5fQ.3SWw3kVeajrmz5XUlQdnfqt2tgiBHLVH2mseLz8zOiw",
           },
         }
       );
