@@ -117,10 +117,16 @@ class AppointmentController {
               },
             }
           );
-
           res.status(200).json({
             message: "successfully updated appointment",
             status: status,
+            appointment: {
+              _id: currentAppointment._id,
+              userId: currentAppointment.userId,
+              doctorId: currentAppointment.doctorId,
+              queueNumber: currentAppointment.queueNumber,
+              status: status,
+            }
           });
         } else {
           next({ name: "404 Not Found", error: "Data not found" });
@@ -129,7 +135,7 @@ class AppointmentController {
         next({ name: "400 Bad Request", error: "Invalid status" });
       }
     } catch (error) {
-      // console.log(error)
+      console.log(error)
       next(error);
     }
   }

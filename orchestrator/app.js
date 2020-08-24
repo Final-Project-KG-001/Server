@@ -1,5 +1,9 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer, gql, PubSub } = require("apollo-server");
 const axios = require("axios");
+const pubsub = new PubSub();
+
+const DENTAL_ADDED = "DENTAL_ADDED";
+const NEW_APPOINTMENT = "NEW_APPOINTMENT";
 
 const typeDefs = gql`
   type Doctor {
@@ -21,7 +25,7 @@ const typeDefs = gql`
     message: String
   }
 
-  type General {  
+  type General {
     _id: ID
     appointmentId: ID
     appointment: [Appointment]
@@ -101,6 +105,11 @@ const typeDefs = gql`
     addAppointment(doctorId: ID, queueNumber: Int): ResponseAppointment
     changeAppointmentStatus(_id: ID, status: String): ResponseAppointment
   }
+
+  type Subscription {
+    newDental: Dental
+    newAppointment: Appointment
+  }
 `;
 
 //access_token buat test
@@ -110,12 +119,24 @@ const userToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QwMjY2NzQ4ZTIyM2E5NGRhMzdlYSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1OTc4NDI4MDd9.e-GGocKlVpJkG601frFpuO0AVLcUnwD8pCEZwDDGFPU";
 
 const resolvers = {
+  Subscription: {
+    newDental: {
+      subscribe: () => {
+        return pubsub.asyncIterator([ DENTAL_ADDED ]);
+      },
+    },
+    newAppointment: {
+      subscribe: () => {
+        return pubsub.asyncIterator([ NEW_APPOINTMENT ]);
+      },
+    },
+  },
   Query: {
     doctors: async () => {
       const { data } = await axios.get("http://localhost:3000/doctor", {
         headers: {
-          access_token: userToken
-        }
+          access_token: userToken,
+        },
       });
 
       return data;
@@ -123,8 +144,8 @@ const resolvers = {
     dentals: async () => {
       const { data } = await axios.get("http://localhost:3000/dental", {
         headers: {
-          access_token: userToken
-        }
+          access_token: userToken,
+        },
       });
 
       return data;
@@ -132,8 +153,8 @@ const resolvers = {
     generals: async () => {
       const { data } = await axios.get("http://localhost:3000/general", {
         headers: {
-          access_token: userToken
-        }
+          access_token: userToken,
+        },
       });
 
       return data;
@@ -160,33 +181,32 @@ const resolvers = {
   },
   Mutation: {
     addDental: async (parent, args) => {
-      const { data } = await axios.post("http://localhost:3000/dental", args,
-        {
-          headers: {
-            access_token: userToken
-          }
-        });
-
+      const { data } = await axios.post("http://localhost:3000/dental", args, {
+        headers: {
+          access_token: userToken,
+        },
+      });
+      pubsub.publish(DENTAL_ADDED, { newDental: args });
       return data;
     },
     deleteDental: async (parent, args) => {
-      const { data } = await axios.delete(`http://localhost:3000/dental/${ args._id }`,
+      const { data } = await axios.delete(
+        `http://localhost:3000/dental/${ args._id }`,
         {
           headers: {
-            access_token: adminToken
-          }
+            access_token: adminToken,
+          },
         }
       );
 
       return data;
     },
     addGeneral: async (parent, args) => {
-      const { data } = await axios.post("http://localhost:3000/general", args,
-        {
-          headers: {
-            access_token: userToken
-          }
-        });
+      const { data } = await axios.post("http://localhost:3000/general", args, {
+        headers: {
+          access_token: userToken,
+        },
+      });
 
       return data;
     },
@@ -195,8 +215,8 @@ const resolvers = {
         `http://localhost:3000/general/${ args._id }`,
         {
           headers: {
-            access_token: adminToken
-          }
+            access_token: adminToken,
+          },
         }
       );
 
@@ -227,25 +247,22 @@ const resolvers = {
     loginAdmin: async (parent, args) => {
 
       const { email, password } = args;
-
       try {
-
-        const { data } = await axios.post("http://localhost:3000/user/loginadmin", {
-          email,
-          password,
-        })
+        const { data } = await axios.post(
+          "http://localhost:3000/user/loginadmin",
+          {
+            email,
+            password,
+          }
+        );
         if (data) {
-
-          return data
+          return data;
         }
-      }
-      catch (err) {
+      } catch (err) {
         return {
-          message: err.response.data.error
-        }
+          message: err.response.data.error,
+        };
       }
-
-
     },
     updateUser: async (parent, args) => {
       const { _id, name, dob, phoneNumber } = args;
@@ -297,6 +314,8 @@ const resolvers = {
         }
       );
 
+      pubsub.publish(NEW_APPOINTMENT, { newAppointment: data.appointment });
+
       return data;
     },
   },
@@ -304,6 +323,7 @@ const resolvers = {
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${ url }`);
+  console.log(`Subscriptions ready at ${ subscriptionsUrl }`);
 });
