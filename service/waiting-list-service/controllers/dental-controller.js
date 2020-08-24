@@ -36,6 +36,7 @@ class DentalController {
 
     static async postDentalRootHandler(req, res, next) {
         const Dental = req.dentalCollection;
+        const Appointment = req.appointmentCollection;
         
         const { appointmentId } = req.body;
 
@@ -45,8 +46,14 @@ class DentalController {
 
         try {
             const result = await Dental.insertOne(newQueue);
-
-            res.status(201).json({status: '201 Created', message: 'Appointment have successfully added to queue'});
+            const responseData = result.ops[0];
+            const appointment = await Appointment.findOne(
+                {_id: responseData.appointmentId}
+            );
+            responseData.status = '201 Created';
+            responseData.message = 'Appointment have successfully added to queue';
+            responseData.appointment = [appointment];
+            res.status(201).json(responseData);
         } catch (error) {
             next(error);
         }
