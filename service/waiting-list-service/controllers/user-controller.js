@@ -8,10 +8,10 @@ class UserController {
     try {
       const { name, dob, email, password, phoneNumber } = req.body;
       const collection = req.userCollection;
-
+      console.log(req.body)
       let checkRegister = await validateRegister(req.body);
 
-      if (checkRegister[0] === false) {
+      if (checkRegister[ 0 ] === false) {
         const newUser = await collection.insertOne({
           name,
           dob, // format yyyy-mm-dd
@@ -26,7 +26,7 @@ class UserController {
           email,
         });
       } else {
-        next({ name: "400 Bad Request", error: checkRegister[1] });
+        next({ name: "400 Bad Request", error: checkRegister[ 1 ] });
       }
     } catch (error) {
       next(error);
@@ -43,6 +43,7 @@ class UserController {
       });
 
       if (response) {
+
         if (comparePassword(password, response.password)) {
           let token = signToken({
             id: response._id,
@@ -69,7 +70,7 @@ class UserController {
 
       const checkUpdate = await validateUpdate(req.body);
 
-      if (checkUpdate[0] === false) {
+      if (checkUpdate[ 0 ] === false) {
         const updateUser = await collection.updateOne(
           { _id: ObjectID(id) },
           {
@@ -82,7 +83,7 @@ class UserController {
         );
         res.status(200).json({ message: "successfully updated user" });
       } else {
-        next({ name: "400 Bad Request", error: checkUpdate[1] });
+        next({ name: "400 Bad Request", error: checkUpdate[ 1 ] });
       }
     } catch (error) {
       next(error);
@@ -92,7 +93,7 @@ class UserController {
   static async read(req, res, next) {
     try {
       const collection = req.userCollection;
-
+      
       const users = await collection.find().toArray();
       res.status(200).json({ users: users });
     } catch (error) {
@@ -101,6 +102,7 @@ class UserController {
   }
 
   static async loginAdmin(req, res, next) {
+
     try {
       const { email, password } = req.body;
       const collection = req.userCollection;
@@ -110,21 +112,26 @@ class UserController {
       });
 
       if (response) {
+
         if (comparePassword(password, response.password)) {
+
           if (response.role === "admin") {
             let token = signToken({
               id: response._id,
               email: email,
               role: response.role,
             });
+
             res.status(200).json({ access_token: token });
           } else {
             next({ name: "403 Forbidden", error: "Admin access required" });
           }
         } else {
+
           next({ name: "401 Unauthorized", error: "Invalid email/password" });
         }
       } else {
+
         next({ name: "401 Unauthorized", error: "Invalid email/password" });
       }
     } catch (error) {

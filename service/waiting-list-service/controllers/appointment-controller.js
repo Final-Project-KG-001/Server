@@ -1,26 +1,27 @@
-const { ObjectID } = require("mongodb");
+const { ObjectId } = require("mongodb");
 
 class AppointmentController {
   static async write(req, res, next) {
     try {
+
       const { doctorId, queueNumber } = req.body;
       const collection = req.appointmentCollection;
-      
+
       if (doctorId !== "" && doctorId !== null) {
         const newAppointment = await collection.insertOne({
-          userId: ObjectID(req.currentUser._id),
-          doctorId: ObjectID(doctorId),
+          userId: ObjectId(req.currentUser._id),
+          doctorId: ObjectId(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
           createdAt: (new Date()).toLocaleString(),
         });
-        
+
         const {
           userId,
           doctorId: doctor,
           queueNumber: number,
           createdAt: create
-        } = newAppointment.ops[0];
+        } = newAppointment.ops[ 0 ];
         res.status(201).json({
           message: "successfully created new queue",
           userId: userId,
@@ -37,6 +38,7 @@ class AppointmentController {
   }
 
   static async read(req, res, next) {
+
     try {
       const collection = req.appointmentCollection;
       const appointments = await collection.aggregate([
@@ -45,13 +47,16 @@ class AppointmentController {
           {
             from: "doctors",
             let: { doctorId: "$doctorId" },
-            pipeline:  [
-              { $match: 
-                { $expr: 
-                  { $and: 
-                    [
-                      { $eq: ["$_id", "$$doctorId"]}
-                    ]
+            pipeline: [
+              {
+                $match:
+                {
+                  $expr:
+                  {
+                    $and:
+                      [
+                        { $eq: [ "$_id", "$$doctorId" ] }
+                      ]
                   }
                 }
               }
@@ -65,12 +70,15 @@ class AppointmentController {
             from: "users",
             let: { userId: "$userId" },
             pipeline: [
-              { $match: 
-                { $expr: 
-                  { $and: 
-                    [
-                      { $eq: ["$_id", "$$userId"]}
-                    ]
+              {
+                $match:
+                {
+                  $expr:
+                  {
+                    $and:
+                      [
+                        { $eq: [ "$_id", "$$userId" ] }
+                      ]
                   }
                 }
               }
@@ -88,17 +96,20 @@ class AppointmentController {
 
   static async changeStatus(req, res, next) {
     try {
+
       const id = req.params.id;
       const { status } = req.body;
       const collection = req.appointmentCollection;
 
       if (status !== "" && status !== null) {
+
         const currentAppointment = await collection.findOne({
-          _id: ObjectID(id),
+          _id: ObjectId(id),
         });
+
         if (currentAppointment) {
           const updateAppointment = await collection.updateOne(
-            { _id: ObjectID(id) },
+            { _id: ObjectId(id) },
             {
               $set: {
                 status: status,

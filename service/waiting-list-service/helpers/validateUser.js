@@ -3,6 +3,7 @@ function validateRegister(data) {
   let errorMessage = [];
 
   try {
+
     if (name === "" || name === null) {
       errorMessage.push("Name field cannot be empty!");
     } else if (typeof name !== "string") {
@@ -34,16 +35,18 @@ function validateRegister(data) {
     }
 
     if (errorMessage.length > 0) {
-      return [true, errorMessage];
+      return [ true, errorMessage ];
     } else {
-      return [false, ""];
+      return [ false, "" ];
     }
   } catch (error) {
-    return [true, "Invalid data type!"];
+    return [ true, "Invalid data type!" ];
   }
 }
 
 function validateUpdate(data) {
+
+
   const { name, dob, phoneNumber } = data;
   let errorMessage = [];
 
@@ -69,12 +72,12 @@ function validateUpdate(data) {
     }
 
     if (errorMessage.length > 0) {
-      return [true, errorMessage];
+      return [ true, errorMessage ];
     } else {
-      return [false, ""];
+      return [ false, "" ];
     }
   } catch (error) {
-    return [true, "Invalid data type!"];
+    return [ true, "Invalid data type!" ];
   }
 }
 

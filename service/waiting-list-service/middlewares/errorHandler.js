@@ -1,5 +1,7 @@
 const errorHandler = (err, req, res, next) => {
+
   switch (err.name) {
+
     case "400 Bad Request":
       res.status(400).json({ error: err.error });
 

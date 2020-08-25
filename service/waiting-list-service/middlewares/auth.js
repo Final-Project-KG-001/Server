@@ -3,8 +3,8 @@ const { ObjectID } = require("mongodb");
 
 async function isAdmin(req, res, next) {
   try {
-    if(req.currentUser.role !== "admin") {
-      next({name: "403 Forbidden", error: "Admin access required" });
+    if (req.currentUser.role !== "admin") {
+      next({ name: "403 Forbidden", error: "Admin access required" });
     } else {
       next();
     }
@@ -15,8 +15,8 @@ async function isAdmin(req, res, next) {
 
 async function isUser(req, res, next) {
   try {
-    if(req.currentUser.role !== "user") {
-      next({name: "403 Forbidden", error: "User access required"});
+    if (req.currentUser.role !== "user") {
+      next({ name: "403 Forbidden", error: "User access required" });
     } else {
       next();
     }
@@ -26,21 +26,27 @@ async function isUser(req, res, next) {
 }
 
 async function authentication(req, res, next) {
+
   try {
     const { access_token } = req.headers;
     const collection = req.userCollection;
 
+
     if (access_token) {
       const payload = await verifyToken(access_token);
       const response = await collection.findOne({ email: payload.email });
-
+      // const response = await collection.findOne({ email: payload });
+      
       if (response) {
         req.currentUser = response;
+
         next();
       } else {
+
         next({ name: "401 Unauthorized", error: "Failed to authenticate" });
       }
     } else {
+
       next({ name: "401 Unauthorized", error: "Failed to authenticate" });
     }
   } catch (error) {
@@ -71,7 +77,7 @@ async function authorization(req, res, next) {
 
 module.exports = {
   isAdmin,
-  isUser,
+  // isUser,
   authentication,
   authorization,
 };
