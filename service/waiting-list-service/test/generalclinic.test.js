@@ -2,8 +2,11 @@ const request = require("supertest");
 const app = require("../app");
 const { signToken } = require("../helpers/jwt")
 
-const access_token = signToken('fiah@mail.com')
-const admin_token = signToken('admin@mail.com')
+// const access_token = signToken('fiah@mail.com')
+// const admin_token = signToken('admin@mail.com')
+const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2UxZWFhZGI3ZGJiMWM4MDlkZmQ2NiIsImVtYWlsIjoidXNlcjRAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTU5NzkwNjkwOX0.qFCC1Yz3EIiDulCXuuDTuP1gmNJ0BpbRBLAs9kY364U"
+const admin_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QyYzU3ZmRiNWVkOTJiNGZlNWVlMCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1OTgzMjcwNzl9.4N5yPnq9LiTjmt9x8gJdkbZvCsfd8t0pt89EUdmT7Ac"
+
 let getAppointmentId = ""
 
 describe(`GET /general - Read all general clinic's queue`, () => {
@@ -64,19 +67,6 @@ describe(`POST /general - Create new general clinic's queue`, () => {
         done();
       });
   });
-
-  test(`500 Fail POST General - Should not create new general clinic's`, (done) => {
-    request(app)
-      .post("/general")
-      .set("access_token", access_token)
-      .then((response) => {
-        const { body, status } = response;
-        expect(status).toBe(500);
-        expect(body).toHaveProperty("error", { "message": "Internal Server Error" });
-        done();
-      });
-  });
-
 });
 
 describe(`DELETE /general - Delete general clinic's queue`, () => {
@@ -117,18 +107,6 @@ describe(`DELETE /general - Delete general clinic's queue`, () => {
         const { body, status } = response;
         expect(status).toBe(404);
         expect(body).toHaveProperty("error", "Appointment not found");
-        done();
-      });
-  });
-
-  test(`500 Fail DELETE General - Should not delete general clinic's queue`, (done) => {
-    request(app)
-      .delete("/general/5cjdcnjdcn")
-      .set("access_token", admin_token)
-      .then((response) => {
-        const { body, status } = response;
-        expect(status).toBe(500);
-        expect(body).toHaveProperty("error", { "message": "Internal Server Error" });
         done();
       });
   });

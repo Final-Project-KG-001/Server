@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon bin/http",
-    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit --verbose --coverage --watch generalclinic.test.js"
+    "test": "jest --runInBand --detectOpenHandles --forceExit --verbose --coverage"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.31",
     "mongodb": "^3.6.0"
   },
   "devDependencies": {
