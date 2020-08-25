@@ -102,7 +102,7 @@ const typeDefs = gql`
       dob: String
       phoneNumber: String
     ): ResponseUser
-    addAppointment(doctorId: ID, queueNumber: String): ResponseAppointment
+    addAppointment(doctorId: ID, queueNumber: Int): ResponseAppointment
     changeAppointmentStatus(_id: ID, status: String): ResponseAppointment
   }
 
