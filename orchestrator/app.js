@@ -78,7 +78,7 @@ const typeDefs = gql`
     doctors: [Doctor]
     dentals: [Dental]
     generals: [General]
-    users: [User]
+    users(access_token: String): [User]
     appointments: [Appointment]
   }
 
