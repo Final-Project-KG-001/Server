@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+const moment = require('moment-timezone');
 
 class AppointmentController {
   static async write(req, res, next) {
@@ -13,7 +14,7 @@ class AppointmentController {
           doctorId: ObjectId(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
-          createdAt: (new Date()).toLocaleString(),
+          createdAt: moment().tz("Asia/Jakarta").format('YYYY-MM-DD HH:mm:ss'),
         });
 
         const {
