@@ -8,7 +8,6 @@ class UserController {
     try {
       const { name, dob, email, password, phoneNumber } = req.body;
       const collection = req.userCollection;
-      console.log(req.body)
       let checkRegister = await validateRegister(req.body);
 
       if (checkRegister[ 0 ] === false) {

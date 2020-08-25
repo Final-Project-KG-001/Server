@@ -3,6 +3,7 @@ const axios = require("axios");
 const pubsub = new PubSub();
 
 const DENTAL_ADDED = "DENTAL_ADDED";
+const GENERAL_ADDED = "GENERAL_ADDED";
 const NEW_APPOINTMENT = "NEW_APPOINTMENT";
 
 const typeDefs = gql`
@@ -109,6 +110,7 @@ const typeDefs = gql`
 
   type Subscription {
     newDental: Dental
+    newGeneral: General
     newAppointment: Appointment
   }
 `;
@@ -125,6 +127,11 @@ const resolvers = {
       subscribe: () => {
         return pubsub.asyncIterator([ DENTAL_ADDED ]);
       },
+    },
+    newGeneral: {
+      subscribe: () => {
+        return pubsub.asyncIterator([ GENERAL_ADDED ]);
+      }
     },
     newAppointment: {
       subscribe: () => {
@@ -187,7 +194,7 @@ const resolvers = {
           access_token: args.access_token,
         },
       });
-      pubsub.publish(DENTAL_ADDED, { newDental: args });
+      pubsub.publish(DENTAL_ADDED, { newDental: data });
       return data;
     },
     deleteDental: async (parent, args) => {
@@ -208,7 +215,7 @@ const resolvers = {
           access_token: args.access_token,
         },
       });
-
+      pubsub.publish(GENERAL_ADDED, { newGeneral: data });
       return data;
     },
     deleteGeneral: async (parent, args) => {
