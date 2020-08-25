@@ -14,8 +14,8 @@ app.use(connectToMongoDB)
 app.use("/", router);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Current PORT: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Current PORT: ${PORT}`);
+// });
 
 module.exports = app
