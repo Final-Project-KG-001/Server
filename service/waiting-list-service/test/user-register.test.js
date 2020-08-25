@@ -3,10 +3,10 @@ const app = require("../app");
 
 describe("POST /user/register", () => {
   const testUser = {
-    name: "user1",
+    name: "userTesting",
     dob: "2000-10-10",
-    email: "user1@mail.com",
-    password: "password1",
+    email: "userTesting@mail.com",
+    password: "passwordTesting",
     phoneNumber: "621789123",
   };
 
@@ -91,7 +91,7 @@ describe("POST /user/register", () => {
       });
   });
 
-  test.only("400 Failed Create - invalid phone number -  Should return error message", (done) => {
+  test("400 Failed Create - invalid phone number -  Should return error message", (done) => {
     request(app)
       .post("/user/register")
       .send({

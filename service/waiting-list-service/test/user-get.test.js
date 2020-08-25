@@ -55,7 +55,7 @@ describe("GET /user/", () => {
   const userToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2UxZWFhZGI3ZGJiMWM4MDlkZmQ2NiIsImVtYWlsIjoidXNlcjRAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTU5NzkyNDcwMn0.aCXFfw5dwrVlers4ZXBOPlM3UYgSMuUrmjmfud8Cp8k";
 
-  test.only("403 Failed Forbidden - Should return error message", (done) => {
+  test("403 Failed Forbidden - Should return error message", (done) => {
     request(app)
       .get("/user")
       .send(adminUser)

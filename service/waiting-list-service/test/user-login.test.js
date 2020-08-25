@@ -7,7 +7,7 @@ describe("POST /user/login", () => {
     password: "password4",
   };
 
-  test.only("200 Success Login - Should return access token", (done) => {
+  test("200 Success Login - Should return access token", (done) => {
     request(app)
       .post("/user/login")
       .send(testUser)

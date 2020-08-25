@@ -12,7 +12,7 @@ describe("PUT /appointment/:id", () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QyYzU3ZmRiNWVkOTJiNGZlNWVlMCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1OTc5MjQzOTl9.ZibH8BvEaB778U8qDaA8YZKRpa_uC7OB4sWThqYcbr4";
   const id = "5f3e2246f26f5f6630cddef4";
 
-  test.only("200 Success Update - Should return message and new status", (done) => {
+  test("200 Success Update - Should return message and new status", (done) => {
     request(app)
       .put(`/appointment/${id}`)
       .send(data)
