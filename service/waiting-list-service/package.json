@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles --forceExit --verbose --coverage"
+    "test": "jest --runInBand --detectOpenHandles --forceExit --verbose --coverage --watch generalclinic.test.js"
   },
   "keywords": [],
   "author": "",

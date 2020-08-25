@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 
-describe(`GET /general - Read all general clinic's queue`, () => {
+describe.only(`GET /general - Read all general clinic's queue`, () => {
   test(`200 Success GET General - Should return all general clinic's queue`, (done) => {
     request(app)
       .get("/general")

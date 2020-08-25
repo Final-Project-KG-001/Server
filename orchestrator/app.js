@@ -116,7 +116,7 @@ const typeDefs = gql`
 const adminToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QyYzU3ZmRiNWVkOTJiNGZlNWVlMCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1OTc4NDQ1ODd9.E9EmrijRAx0Sb6eDM6CUKUEUYOYd9uR3GkmvktChtSs";
 const userToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QwMjY2NzQ4ZTIyM2E5NGRhMzdlYSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1OTc4NDI4MDd9.e-GGocKlVpJkG601frFpuO0AVLcUnwD8pCEZwDDGFPU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDNiN2RjNWZjMTIyY2FlZWMzM2I5MyIsImVtYWlsIjoiZmlhaEBtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTk4Mjc0NDk1fQ.sGiBPSLShnEh1mkWw3pKAx-IgsFFZEfxewYGR9Tlk-Q";
 
 const resolvers = {
   Subscription: {

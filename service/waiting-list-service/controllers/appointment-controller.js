@@ -9,11 +9,11 @@ class AppointmentController {
 
       if (doctorId !== "" && doctorId !== null) {
         const newAppointment = await collection.insertOne({
-          userId: ObjectID(req.currentUser._id),
-          doctorId: ObjectID(doctorId),
+          userId: ObjectId(req.currentUser._id),
+          doctorId: ObjectId(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting & done
-          createdAt: new Date(),
+          createdAt: (new Date()).toLocaleString(),
         });
 
         const {
