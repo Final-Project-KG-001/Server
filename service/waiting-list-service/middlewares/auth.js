@@ -13,17 +13,17 @@ async function isAdmin(req, res, next) {
   }
 }
 
-async function isUser(req, res, next) {
-  try {
-    if(req.currentUser.role !== "user") {
-      next({name: "403 Forbidden", error: "User access required"});
-    } else {
-      next();
-    }
-  } catch (error) {
-    next(error);
-  }
-}
+// async function isUser(req, res, next) {
+//   try {
+//     if(req.currentUser.role !== "user") {
+//       next({name: "403 Forbidden", error: "User access required"});
+//     } else {
+//       next();
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// }
 
 async function authentication(req, res, next) {
   try {
@@ -71,7 +71,7 @@ async function authorization(req, res, next) {
 
 module.exports = {
   isAdmin,
-  isUser,
+  // isUser,
   authentication,
   authorization,
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1598328299969" clover="3.2.0">
-  <project timestamp="1598328299969" name="All files">
-    <metrics statements="342" coveredstatements="266" conditionals="101" coveredconditionals="75" methods="27" coveredmethods="22" elements="470" coveredelements="363" complexity="0" loc="342" ncloc="342" packages="5" files="18" classes="18"/>
+<coverage generated="1598335839433" clover="3.2.0">
+  <project timestamp="1598335839433" name="All files">
+    <metrics statements="337" coveredstatements="280" conditionals="99" coveredconditionals="85" methods="26" coveredmethods="23" elements="462" coveredelements="388" complexity="0" loc="337" ncloc="337" packages="5" files="18" classes="18"/>
     <package name="waiting-list-service">
       <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="app.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\app.js">
@@ -22,7 +22,7 @@
       </file>
     </package>
     <package name="waiting-list-service.controllers">
-      <metrics statements="147" coveredstatements="101" conditionals="32" coveredconditionals="25" methods="15" coveredmethods="12"/>
+      <metrics statements="147" coveredstatements="103" conditionals="32" coveredconditionals="26" methods="15" coveredmethods="12"/>
       <file name="appointment-controller.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\controllers\appointment-controller.js">
         <metrics statements="29" coveredstatements="25" conditionals="10" coveredconditionals="10" methods="3" coveredmethods="3"/>
         <line num="1" count="10" type="stmt"/>
@@ -130,19 +130,19 @@
         <line num="88" count="10" type="stmt"/>
       </file>
       <file name="user-controller.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\controllers\user-controller.js">
-        <metrics statements="53" coveredstatements="44" conditionals="14" coveredconditionals="11" methods="5" coveredmethods="5"/>
+        <metrics statements="53" coveredstatements="46" conditionals="14" coveredconditionals="12" methods="5" coveredmethods="5"/>
         <line num="1" count="10" type="stmt"/>
         <line num="2" count="10" type="stmt"/>
         <line num="3" count="10" type="stmt"/>
         <line num="4" count="10" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="14" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
         <line num="37" count="2" type="stmt"/>
         <line num="38" count="2" type="stmt"/>
@@ -187,13 +187,13 @@
       </file>
     </package>
     <package name="waiting-list-service.helpers">
-      <metrics statements="80" coveredstatements="61" conditionals="50" coveredconditionals="36" methods="7" coveredmethods="6"/>
+      <metrics statements="80" coveredstatements="73" conditionals="50" coveredconditionals="45" methods="7" coveredmethods="7"/>
       <file name="hashPassword.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\helpers\hashPassword.js">
-        <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="10" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
         <line num="11" count="4" type="stmt"/>
         <line num="14" count="10" type="stmt"/>
       </file>
@@ -211,52 +211,52 @@
       <file name="mongoDB.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\helpers\mongoDB.js">
         <metrics statements="19" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="10" type="stmt"/>
-        <line num="4" count="36" type="stmt"/>
-        <line num="5" count="36" type="stmt"/>
-        <line num="6" count="36" type="stmt"/>
-        <line num="7" count="36" type="stmt"/>
-        <line num="9" count="36" type="stmt"/>
-        <line num="11" count="36" type="stmt"/>
-        <line num="12" count="36" type="stmt"/>
-        <line num="13" count="36" type="stmt"/>
-        <line num="14" count="36" type="stmt"/>
-        <line num="15" count="36" type="stmt"/>
-        <line num="17" count="36" type="stmt"/>
-        <line num="18" count="36" type="stmt"/>
-        <line num="19" count="36" type="stmt"/>
-        <line num="20" count="36" type="stmt"/>
-        <line num="21" count="36" type="stmt"/>
-        <line num="23" count="36" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="12" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="18" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="21" count="39" type="stmt"/>
+        <line num="23" count="39" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="29" count="10" type="stmt"/>
       </file>
       <file name="validateUser.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\helpers\validateUser.js">
-        <metrics statements="47" coveredstatements="33" conditionals="50" coveredconditionals="36" methods="2" coveredmethods="2"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="1" type="cond" truecount="1" falsecount="1"/>
+        <metrics statements="47" coveredstatements="42" conditionals="50" coveredconditionals="45" methods="2" coveredmethods="2"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="9" count="0" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="20" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="14" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="26" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="30" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="1" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="30" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
+        <line num="36" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
         <line num="47" count="4" type="stmt"/>
         <line num="48" count="4" type="stmt"/>
@@ -282,9 +282,9 @@
       </file>
     </package>
     <package name="waiting-list-service.middlewares">
-      <metrics statements="49" coveredstatements="38" conditionals="17" coveredconditionals="13" methods="5" coveredmethods="4"/>
+      <metrics statements="44" coveredstatements="38" conditionals="15" coveredconditionals="13" methods="4" coveredmethods="4"/>
       <file name="auth.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\middlewares\auth.js">
-        <metrics statements="36" coveredstatements="27" conditionals="12" coveredconditionals="9" methods="4" coveredmethods="3"/>
+        <metrics statements="31" coveredstatements="27" conditionals="10" coveredconditionals="9" methods="3" coveredmethods="3"/>
         <line num="1" count="10" type="stmt"/>
         <line num="2" count="10" type="stmt"/>
         <line num="5" count="9" type="stmt"/>
@@ -292,11 +292,6 @@
         <line num="7" count="3" type="stmt"/>
         <line num="9" count="6" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
         <line num="29" count="30" type="stmt"/>
         <line num="30" count="30" type="stmt"/>
         <line num="31" count="30" type="stmt"/>
@@ -325,9 +320,9 @@
       <file name="errorHandler.js" path="D:\Hacktiv8\Phase 3\Final Project\Server\service\waiting-list-service\middlewares\errorHandler.js">
         <metrics statements="13" coveredstatements="11" conditionals="5" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="1" count="10" type="stmt"/>
-        <line num="2" count="26" type="cond" truecount="4" falsecount="1"/>
-        <line num="4" count="6" type="stmt"/>
-        <line num="6" count="6" type="stmt"/>
+        <line num="2" count="28" type="cond" truecount="4" falsecount="1"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="6" count="8" type="stmt"/>
         <line num="9" count="11" type="stmt"/>
         <line num="11" count="11" type="stmt"/>
         <line num="14" count="5" type="stmt"/>
