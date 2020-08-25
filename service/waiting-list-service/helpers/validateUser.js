@@ -46,6 +46,7 @@ function validateRegister(data) {
 
 function validateUpdate(data) {
 
+
   const { name, dob, phoneNumber } = data;
   let errorMessage = [];
 

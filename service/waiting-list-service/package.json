@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles --forceExit --verbose --coverage --watch generalclinic.test.js"
+    "dev": "NODE_ENV=development nodemon bin/http",
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit --verbose --coverage --watch generalclinic.test.js"
   },
   "keywords": [],
   "author": "",
