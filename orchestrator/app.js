@@ -75,18 +75,18 @@ const typeDefs = gql`
   }
 
   type Query {
-    doctors: [Doctor]
-    dentals: [Dental]
-    generals: [General]
-    users: [User]
-    appointments: [Appointment]
+    doctors(access_token: String): [Doctor]
+    dentals(access_token: String): [Dental]
+    generals(access_token: String): [General]
+    users(access_token: String): [User]
+    appointments(access_token: String): [Appointment]
   }
 
   type Mutation {
-    addDental(appointmentId: ID): ResponseDental
-    deleteDental(_id: ID): ResponseDental
-    addGeneral(appointmentId: ID): ResponseGeneral
-    deleteGeneral(_id: ID): ResponseGeneral
+    addDental(appointmentId: ID, access_token: String): ResponseDental
+    deleteDental(_id: ID, access_token: String): ResponseDental
+    addGeneral(appointmentId: ID, access_token: String): ResponseGeneral
+    deleteGeneral(_id: ID, access_token: String): ResponseGeneral
     registerUser(
       name: String
       dob: String
@@ -101,9 +101,10 @@ const typeDefs = gql`
       name: String
       dob: String
       phoneNumber: String
+      access_token: String
     ): ResponseUser
-    addAppointment(doctorId: ID, queueNumber: Int): ResponseAppointment
-    changeAppointmentStatus(_id: ID, status: String): ResponseAppointment
+    addAppointment(doctorId: ID, queueNumber: Int, access_token: String): ResponseAppointment
+    changeAppointmentStatus(_id: ID, status: String, access_token: String): ResponseAppointment
   }
 
   type Subscription {
@@ -132,47 +133,47 @@ const resolvers = {
     },
   },
   Query: {
-    doctors: async () => {
+    doctors: async (parent, args) => {
       const { data } = await axios.get("http://localhost:3000/doctor", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
       return data;
     },
-    dentals: async () => {
+    dentals: async (parent, args) => {
       const { data } = await axios.get("http://localhost:3000/dental", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
       return data;
     },
-    generals: async () => {
+    generals: async (parent, args) => {
       const { data } = await axios.get("http://localhost:3000/general", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
       return data;
     },
-    users: async () => {
+    users: async (parent, args) => {
 
       const { data } = await axios.get("http://localhost:3000/user", {
         headers: {
-          access_token: adminToken,
+          access_token: args.access_token,
         },
       });
       return data.users;
     },
-    appointments: async () => {
+    appointments: async (parent, args) => {
 
       const { data } = await axios.get("http://localhost:3000/appointment", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
       // console.log(data)
@@ -183,7 +184,7 @@ const resolvers = {
     addDental: async (parent, args) => {
       const { data } = await axios.post("http://localhost:3000/dental", args, {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
       pubsub.publish(DENTAL_ADDED, { newDental: args });
@@ -194,7 +195,7 @@ const resolvers = {
         `http://localhost:3000/dental/${ args._id }`,
         {
           headers: {
-            access_token: adminToken,
+            access_token: args.access_token,
           },
         }
       );
@@ -204,7 +205,7 @@ const resolvers = {
     addGeneral: async (parent, args) => {
       const { data } = await axios.post("http://localhost:3000/general", args, {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
@@ -215,7 +216,7 @@ const resolvers = {
         `http://localhost:3000/general/${ args._id }`,
         {
           headers: {
-            access_token: adminToken,
+            access_token: args.access_token,
           },
         }
       );
@@ -275,7 +276,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: userToken,
+            access_token: args.access_token,
           },
         }
       );
@@ -293,7 +294,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDEyNWExY2FiNGQ5MjBlZTRiOTkwZCIsImVtYWlsIjoiYW1lbEBtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTk4MTA1MTA5fQ.3SWw3kVeajrmz5XUlQdnfqt2tgiBHLVH2mseLz8zOiw",
+            access_token: args.access_token,
           },
         }
       );
@@ -309,7 +310,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: adminToken,
+            access_token: args.access_token,
           },
         }
       );
