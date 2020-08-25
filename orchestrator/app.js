@@ -132,47 +132,47 @@ const resolvers = {
     },
   },
   Query: {
-    doctors: async () => {
+    doctors: async (parent, args) => {
       const { data } = await axios.get("http://localhost:3000/doctor", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
       return data;
     },
-    dentals: async () => {
+    dentals: async (parent, args) => {
       const { data } = await axios.get("http://localhost:3000/dental", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
       return data;
     },
-    generals: async () => {
+    generals: async (parent, args) => {
       const { data } = await axios.get("http://localhost:3000/general", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
       return data;
     },
-    users: async () => {
+    users: async (parent, args) => {
 
       const { data } = await axios.get("http://localhost:3000/user", {
         headers: {
-          access_token: adminToken,
+          access_token: args.access_token,
         },
       });
       return data.users;
     },
-    appointments: async () => {
+    appointments: async (parent, args) => {
 
       const { data } = await axios.get("http://localhost:3000/appointment", {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
       // console.log(data)
@@ -183,7 +183,7 @@ const resolvers = {
     addDental: async (parent, args) => {
       const { data } = await axios.post("http://localhost:3000/dental", args, {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
       pubsub.publish(DENTAL_ADDED, { newDental: args });
@@ -194,7 +194,7 @@ const resolvers = {
         `http://localhost:3000/dental/${ args._id }`,
         {
           headers: {
-            access_token: adminToken,
+            access_token: args.access_token,
           },
         }
       );
@@ -204,7 +204,7 @@ const resolvers = {
     addGeneral: async (parent, args) => {
       const { data } = await axios.post("http://localhost:3000/general", args, {
         headers: {
-          access_token: userToken,
+          access_token: args.access_token,
         },
       });
 
@@ -215,7 +215,7 @@ const resolvers = {
         `http://localhost:3000/general/${ args._id }`,
         {
           headers: {
-            access_token: adminToken,
+            access_token: args.access_token,
           },
         }
       );
@@ -275,7 +275,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: userToken,
+            access_token: args.access_token,
           },
         }
       );
@@ -309,7 +309,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: adminToken,
+            access_token: args.access_token,
           },
         }
       );
