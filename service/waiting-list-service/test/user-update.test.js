@@ -142,7 +142,7 @@ describe("PUT /user/:id", () => {
     });
   })
 
-  test.only("404 Failed Update - user not found -  Should return error message", (done) => {
+  test("404 Failed Update - user not found -  Should return error message", (done) => {
     request(app)
     .put("/user/5f3d0266748e223a94da37ae")
     .send(testData)

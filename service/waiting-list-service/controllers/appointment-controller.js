@@ -33,7 +33,6 @@ class AppointmentController {
         next({ name: "400 Bad Request", error: "Doctor ID cannot be empty!" });
       }
     } catch (error) {
-      console.log(error)
       next(error);
     }
   }

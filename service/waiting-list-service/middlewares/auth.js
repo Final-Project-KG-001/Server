@@ -78,7 +78,7 @@ async function authorization(req, res, next) {
 
 module.exports = {
   isAdmin,
-  isUser,
+  // isUser,
   authentication,
   authorization,
 };
