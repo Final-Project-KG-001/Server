@@ -110,7 +110,7 @@ const typeDefs = gql`
 
   type Subscription {
     newDental: Dental
-    new General: General
+    newGeneral: General
     newAppointment: Appointment
   }
 `;
@@ -130,7 +130,7 @@ const resolvers = {
     },
     newGeneral: {
       subscribe: () => {
-        return pubsub.asyncIterator([GENERAL_ADDED]);
+        return pubsub.asyncIterator([ GENERAL_ADDED ]);
       }
     },
     newAppointment: {
@@ -194,7 +194,7 @@ const resolvers = {
           access_token: args.access_token,
         },
       });
-      pubsub.publish(DENTAL_ADDED, { newDental: args });
+      pubsub.publish(DENTAL_ADDED, { newDental: data });
       return data;
     },
     deleteDental: async (parent, args) => {
