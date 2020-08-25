@@ -93,7 +93,7 @@ class UserController {
   static async read(req, res, next) {
     try {
       const collection = req.userCollection;
-
+      
       const users = await collection.find().toArray();
       res.status(200).json({ users: users });
     } catch (error) {

@@ -75,18 +75,18 @@ const typeDefs = gql`
   }
 
   type Query {
-    doctors: [Doctor]
-    dentals: [Dental]
-    generals: [General]
+    doctors(access_token: String): [Doctor]
+    dentals(access_token: String): [Dental]
+    generals(access_token: String): [General]
     users(access_token: String): [User]
-    appointments: [Appointment]
+    appointments(access_token: String): [Appointment]
   }
 
   type Mutation {
-    addDental(appointmentId: ID): ResponseDental
-    deleteDental(_id: ID): ResponseDental
-    addGeneral(appointmentId: ID): ResponseGeneral
-    deleteGeneral(_id: ID): ResponseGeneral
+    addDental(appointmentId: ID, access_token: String): ResponseDental
+    deleteDental(_id: ID, access_token: String): ResponseDental
+    addGeneral(appointmentId: ID, access_token: String): ResponseGeneral
+    deleteGeneral(_id: ID, access_token: String): ResponseGeneral
     registerUser(
       name: String
       dob: String
@@ -101,9 +101,10 @@ const typeDefs = gql`
       name: String
       dob: String
       phoneNumber: String
+      access_token: String
     ): ResponseUser
-    addAppointment(doctorId: ID, queueNumber: Int): ResponseAppointment
-    changeAppointmentStatus(_id: ID, status: String): ResponseAppointment
+    addAppointment(doctorId: ID, queueNumber: Int, access_token: String): ResponseAppointment
+    changeAppointmentStatus(_id: ID, status: String, access_token: String): ResponseAppointment
   }
 
   type Subscription {
@@ -293,7 +294,7 @@ const resolvers = {
         },
         {
           headers: {
-            access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDEyNWExY2FiNGQ5MjBlZTRiOTkwZCIsImVtYWlsIjoiYW1lbEBtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTk4MTA1MTA5fQ.3SWw3kVeajrmz5XUlQdnfqt2tgiBHLVH2mseLz8zOiw",
+            access_token: args.access_token,
           },
         }
       );

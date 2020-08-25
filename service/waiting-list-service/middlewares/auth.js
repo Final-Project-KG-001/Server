@@ -34,9 +34,9 @@ async function authentication(req, res, next) {
 
     if (access_token) {
       const payload = await verifyToken(access_token);
-      // const response = await collection.findOne({ email: payload.email });
-      const response = await collection.findOne({ email: payload });
-
+      const response = await collection.findOne({ email: payload.email });
+      // const response = await collection.findOne({ email: payload });
+      
       if (response) {
         req.currentUser = response;
 
@@ -50,7 +50,6 @@ async function authentication(req, res, next) {
       next({ name: "401 Unauthorized", error: "Failed to authenticate" });
     }
   } catch (error) {
-
     next(error);
   }
 }
