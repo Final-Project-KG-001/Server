@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.21% </span>
+                <span class="strong">89.19% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/29</span>
+                <span class='fraction'>33/37</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.21% </span>
+                <span class="strong">89.19% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/29</span>
+                <span class='fraction'>33/37</span>
             </div>
         
             
@@ -200,12 +200,24 @@
 <a name='L141'></a><a href='#L141'>141</a>
 <a name='L142'></a><a href='#L142'>142</a>
 <a name='L143'></a><a href='#L143'>143</a>
-<a name='L144'></a><a href='#L144'>144</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">11x</span>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,13 +230,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -344,6 +362,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { ObjectId } = require("mongodb");
+const moment = require('moment-timezone');
 &nbsp;
 class AppointmentController {
   static async write(req, res, next) {
@@ -351,6 +370,8 @@ class AppointmentController {
 &nbsp;
       const { doctorId, queueNumber } = req.body;
       const collection = req.appointmentCollection;
+      const User = req.userCollection;
+      const Doctor = req.doctorCollection;
 &nbsp;
       if (doctorId !== "" &amp;&amp; doctorId !== null) {
         const newAppointment = await collection.insertOne({
@@ -358,22 +379,28 @@ class AppointmentController {
           doctorId: ObjectId(doctorId),
           queueNumber: queueNumber, // handle di client
           status: "waiting", //waiting &amp; done
-          createdAt: (new Date()).toLocaleString(),
+          createdAt: moment().tz("Asia/Jakarta").format('YYYY-MM-DD HH:mm:ss'),
         });
 &nbsp;
-        const {
-          userId,
-          doctorId: doctor,
-          queueNumber: number,
-          createdAt: create
-        } = newAppointment.ops[ 0 ];
-        res.status(201).json({
-          message: "successfully created new queue",
-          userId: userId,
-          doctorId: doctor,
-          queueNumber: number,
-          createdAt: create
+        const response = newAppointment.ops[ 0 ];
+        const doctor = await Doctor.findOne({
+          _id: response.doctorId
         });
+        const user = await User.findOne({
+          _id: response.userId
+        });
+        response.message = 'successfully created new queue';
+        response.doctor = [doctor];
+        response.user = [user];
+        res.status(201).json(response);
+        // res.status(201).json({
+        //   message: "successfully created new queue",
+        //   _id,
+        //   userId: userId,
+        //   doctorId: doctor,
+        //   queueNumber: number,
+        //   createdAt: create
+        // });
       } else {
         next({ name: "400 Bad Request", error: "Doctor ID cannot be empty!" });
       }
@@ -493,7 +520,7 @@ module.exports = AppointmentController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Aug 25 2020 19:24:58 GMT+0700 (GMT+07:00)
+                at Wed Aug 26 2020 14:08:56 GMT+0700 (GMT+07:00)
             </div>
         </div>
         <script src="../../prettify.js"></script>
