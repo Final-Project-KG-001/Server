@@ -6,6 +6,8 @@ class AppointmentController {
 
       const { doctorId, queueNumber } = req.body;
       const collection = req.appointmentCollection;
+      const User = req.userCollection;
+      const Doctor = req.doctorCollection;
 
       if (doctorId !== "" && doctorId !== null) {
         const newAppointment = await collection.insertOne({
@@ -16,19 +18,25 @@ class AppointmentController {
           createdAt: (new Date()).toLocaleString(),
         });
 
-        const {
-          userId,
-          doctorId: doctor,
-          queueNumber: number,
-          createdAt: create
-        } = newAppointment.ops[ 0 ];
-        res.status(201).json({
-          message: "successfully created new queue",
-          userId: userId,
-          doctorId: doctor,
-          queueNumber: number,
-          createdAt: create
+        const response = newAppointment.ops[ 0 ];
+        const doctor = await Doctor.findOne({
+          _id: response.doctorId
         });
+        const user = await User.findOne({
+          _id: response.userId
+        });
+        response.message = 'successfully created new queue';
+        response.doctor = [doctor];
+        response.user = [user];
+        res.status(201).json(response);
+        // res.status(201).json({
+        //   message: "successfully created new queue",
+        //   _id,
+        //   userId: userId,
+        //   doctorId: doctor,
+        //   queueNumber: number,
+        //   createdAt: create
+        // });
       } else {
         next({ name: "400 Bad Request", error: "Doctor ID cannot be empty!" });
       }
