@@ -305,6 +305,7 @@ const resolvers = {
           },
         }
       );
+      pubsub.publish(NEW_APPOINTMENT, { newAppointment: data })
       // console.log(data)
       return data;
     },
