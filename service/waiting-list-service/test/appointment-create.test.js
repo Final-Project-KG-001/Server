@@ -3,7 +3,7 @@ const app = require("../app");
 
 describe("POST /appointment/", () => {
   const testData = {
-    doctorId: 1,
+    doctorId: "5f4328be1b030f1f046bb5ab",
     queueNumber: 2,
   };
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmM2QwMjY2NzQ4ZTIyM2E5NGRhMzdlYSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1OTc4NDI4MDd9.e-GGocKlVpJkG601frFpuO0AVLcUnwD8pCEZwDDGFPU"
@@ -27,7 +27,21 @@ describe("POST /appointment/", () => {
         expect(body).toHaveProperty("userId", expect.any(String));
         expect(body).toHaveProperty("doctorId", expect.any(String));
         expect(body).toHaveProperty("queueNumber", testData.queueNumber);
+        expect(body).toHaveProperty("status", "waiting");
         expect(body).toHaveProperty("createdAt", expect.any(String));
+        expect(body).toHaveProperty("_id", expect.any(String));
+
+        expect(body.doctor[0]).toHaveProperty("_id", expect.any(String));
+        expect(body.doctor[0]).toHaveProperty("name", expect.any(String));
+        expect(body.doctor[0]).toHaveProperty("polyclinic", expect.any(String));
+
+        expect(body.user[0]).toHaveProperty("_id", expect.any(String));
+        expect(body.user[0]).toHaveProperty("name", expect.any(String));
+        expect(body.user[0]).toHaveProperty("dob", expect.any(String));
+        expect(body.user[0]).toHaveProperty("email", expect.any(String));
+        expect(body.user[0]).toHaveProperty("password", expect.any(String));
+        expect(body.user[0]).toHaveProperty("phoneNumber", expect.any(String));
+        expect(body.user[0]).toHaveProperty("role", expect.any(String));
 
         done();
       });
